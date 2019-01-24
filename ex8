@@ -1,0 +1,253 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace QuickSort
+{
+    class TestCsharp
+    {
+        
+        private static void Quick_Sort(int[] arr, int left, int right)
+        {
+            if (left < right)
+            {
+                int pivot = Partition(arr, left, right);
+
+                if (pivot > 1)
+                {
+                    Quick_Sort(arr, left, pivot - 1);
+                }
+                if (pivot + 1 < right)
+                {
+                    Quick_Sort(arr, pivot + 1, right);
+                }
+            }
+
+        }
+
+        private static int Partition(int[] arr, int left, int right)
+        {
+            int pivot = arr[left];
+            while (true)
+            {
+
+                while (arr[left] < pivot)
+                {
+                    left++;
+                }
+
+                while (arr[right] > pivot)
+                {
+                    right--;
+                }
+
+                if (left < right)
+                {
+                    if (arr[left] == arr[right]) return right;
+
+                    int temp = arr[left];
+                    arr[left] = arr[right];
+                    arr[right] = temp;
+                }
+                else
+                {
+                    return right;
+                }
+            }
+        }
+
+        private static void RamdomArray(int[] arr)
+        {
+            int iRandom, i;
+            Random rd = new Random();
+            iRandom = rd.Next(1000000, 10000000);
+            for (i = 0; i < 1000000; i++)
+            {
+                arr[i] = rd.Next(0, iRandom);
+            }
+        }
+
+        private static int min(int[] arr, int key)
+        {
+            int minn, i = 0;
+            minn = arr[0];
+            for(i=0;i<key;i++)
+            {
+                if (arr[i] <= minn) minn = arr[i];
+            }
+            return minn;
+        }
+
+        private static void Merge(int[] a1, int[] a2, int[] a3, int[] a4, int[] a5, int[] a6, int[] a7, int[] a8, int[] a9, string[] listt)
+        {
+            int i1 = 0, i2 = 0, i3 = 0, i4 = 0, i5 = 0, i6 = 0, i7 = 0, i8 = 0, i9 = 0;
+            
+            while ((i1 < a1.Length) || (i2 < a2.Length) || (i3 < a3.Length) || (i4 < a4.Length) || (i5 < a5.Length) || (i6 < a6.Length) || (i7 < a7.Length) || (i8 < a8.Length))
+            {
+                int[] tempArr = new int[8]; //set condition to add value into array?? if i..=length, u can't
+                int k = 0;
+                if (i1 < a1.Length) { tempArr[k] = a1[i1]; k = k + 1; };
+                if (i2 < a2.Length) { tempArr[k] = a2[i2]; k = k + 1; };
+                if (i3 < a3.Length) { tempArr[k] = a3[i3]; k = k + 1; };
+                if (i4 < a4.Length) { tempArr[k] = a4[i4]; k = k + 1; };
+                if (i5 < a5.Length) { tempArr[k] = a5[i5]; k = k + 1; };
+                if (i6 < a6.Length) { tempArr[k] = a6[i6]; k = k + 1; };
+                if (i7 < a7.Length) { tempArr[k] = a7[i7]; k = k + 1; };
+                if (i8 < a8.Length) { tempArr[k] = a8[i8]; k = k + 1; };
+
+                int numberMin = min(tempArr,k);
+
+                while(i1 < a1.Length)
+                {
+                    if (a1[i1] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i1 = i1 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                
+                while (i2 < a2.Length)
+                {
+                    if (a2[i2] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i2 = i2 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+                while (i3 < a3.Length)
+                {
+                    if (a3[i3] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i3 = i3 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+                while (i4 < a4.Length)
+                {
+                    if (a4[i4] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i4 = i4 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+                while (i5 < a5.Length)
+                {
+                    if (a5[i5] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i5 = i5 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+                while (i6 < a6.Length)
+                {
+                    if (a6[i6] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i6 = i6 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+                while (i7 < a7.Length)
+                {
+                    if (a7[i7] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i7 = i7 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+                while (i8 < a8.Length)
+                {
+                    if (a8[i8] == numberMin)
+                    {
+                        a9[i9] = numberMin; listt[i9] = numberMin.ToString();
+                        i8 = i8 + 1;
+                        i9 = i9 + 1;
+                    } break;
+                }
+                    
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            
+             //{ 2, 5, -4, 11, 0, 18, 22, 67, 51, 6 };
+
+            Console.WriteLine("Sap xep tron (Merge Sort) trong C#: ");
+            Console.WriteLine("-------------------------------------");
+
+            //Console.WriteLine("\nIn mang ban dau: ");
+            //foreach (var item in arr)
+            //{
+            //    Console.Write(" " + item);
+            //}
+            //Console.WriteLine();
+
+
+            int[] array1 = new int[1000000];
+            RamdomArray(array1);
+            Quick_Sort(array1, 0, array1.Length - 1);
+
+            int[] array2 = new int[1000000];
+            RamdomArray(array2);
+            Quick_Sort(array2, 0, array2.Length - 1);
+
+            int[] array3 = new int[1000000];
+            RamdomArray(array3);
+            Quick_Sort(array3, 0, array3.Length - 1);
+
+            int[] array4 = new int[1000000];
+            RamdomArray(array4);
+            Quick_Sort(array4, 0, array4.Length - 1);
+
+            int[] array5 = new int[1000000];
+            RamdomArray(array5);
+            Quick_Sort(array5, 0, array5.Length - 1);
+            
+            int[] array6 = new int[1000000];
+            RamdomArray(array6);
+            Quick_Sort(array6, 0, array6.Length - 1);
+
+            int[] array7 = new int[1000000];
+            RamdomArray(array7);
+            Quick_Sort(array7, 0, array7.Length - 1);
+
+            int[] array8 = new int[1000000];
+            RamdomArray(array8);
+            Quick_Sort(array8, 0, array8.Length - 1);
+            Console.WriteLine("\n Da xong");
+
+            int[] array9 = new int[8000000];
+            string[] listArr = new string[8000000];
+            Merge(array1, array2, array3, array4, array5, array6, array7, array8, array9, listArr);
+            string address = @"C:\Users\nnh\source\repos\QuickSort_b8\output.txt";
+            File.WriteAllLines(address, listArr);
+
+            Console.WriteLine("\n Da xong");
+            //Console.WriteLine("\nIn mang da qua sap xep: ");
+
+            //foreach (var item in array1)
+            //{
+            //    Console.Write(" " + item);
+            //}
+            //Console.WriteLine();
+
+            Console.ReadKey();
+        }
+    }
+}
