@@ -1,0 +1,251 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+struct DaThuc
+{
+    public double heso;
+    public int somu;
+}
+
+namespace dathuc_linkedlist
+{
+    class Program
+    {
+        public DaThuc list, h, bi_chia, so_chia, so_thuong, temp_bitru, temp_tru, a, b, c, d, e, f, o, u;
+        //public int i, j;
+        public int somu_max;
+        public LinkedList<DaThuc> thuong = new LinkedList<DaThuc>();
+        public LinkedList<DaThuc> tich = new LinkedList<DaThuc>();
+        public LinkedList<DaThuc> hieu = new LinkedList<DaThuc>();
+        public LinkedList<DaThuc> list_du = new LinkedList<DaThuc>();
+        public LinkedList<DaThuc> temp_bichia = new LinkedList<DaThuc>();
+        public LinkedList<DaThuc> temp_hieu = new LinkedList<DaThuc>();
+
+        //public DaThuc AddNode()
+        //{
+
+        //    Console.Write("Nhap he so: ");
+        //    list.heso = Convert.ToDouble(Console.ReadLine());
+        //    Console.Write("Nhap so mu: ");
+        //    list.somu = Convert.ToInt16(Console.ReadLine());
+        //    return list;
+        //}
+
+        //public void nhap(LinkedList<DaThuc> da, int n)
+        //{
+        //    for (i = 0; i < n; i++)
+        //    {
+        //        da.AddLast(AddNode());
+        //    }
+        //}
+
+        public void hienthi(LinkedList<DaThuc> da)
+        {
+            int i;
+            LinkedListNode<DaThuc> node = da.First;
+            for (i = 0; i < da.Count; i++)
+            {
+                h = node.Value;
+                Console.Write("---- {0}  {1} ----", h.heso, h.somu);
+                node = node.Next;
+            }
+        }
+
+        public LinkedList<DaThuc> nhan(DaThuc _nhan, LinkedList<DaThuc> dathuc1)
+        {
+            LinkedListNode<DaThuc> node = dathuc1.First;
+            int i;
+            xoalist(tich);
+            for (i = 0; i < dathuc1.Count; i++)
+            {
+                h.heso = _nhan.heso * node.Value.heso;
+                h.somu = _nhan.somu + node.Value.somu;
+                tich.AddLast(h);
+                node = node.Next;
+            }
+            return tich;
+        }
+
+        public void xoalist(LinkedList<DaThuc> listxoa)
+        {
+            int i;
+            int xoa = listxoa.Count;
+            for (i = 0; i < xoa; i++)
+            {
+                listxoa.RemoveFirst();
+            }
+        }
+
+        public void copylist(LinkedList<DaThuc> list1, LinkedList<DaThuc> list2)
+        {
+            int i;
+            LinkedListNode<DaThuc> node = list2.First;
+            for (i = 0; i < list2.Count; i++)
+            {
+                list.heso = node.Value.heso;
+                list.somu = node.Value.somu;
+                list1.AddLast(list);
+                node = node.Next;
+            }
+        }
+
+        public LinkedList<int> list_somu(LinkedList<DaThuc> _dathuc)
+        {
+            int i, sm;
+            LinkedList<int> _somu = new LinkedList<int>();
+            for (i = 0; i < _somu.Count; i++)
+            {
+                _somu.RemoveFirst();
+            }
+            LinkedListNode<DaThuc> node_dathuc = _dathuc.First;
+            for (i = 0; i < _dathuc.Count; i++)
+            {
+                sm = node_dathuc.Value.somu;
+                _somu.AddLast(sm);
+                node_dathuc = node_dathuc.Next;
+            }
+            return (_somu);
+        }
+
+        public LinkedList<DaThuc> tru(LinkedList<DaThuc> list_bitru, LinkedList<DaThuc> list_tru)
+        {
+
+            LinkedListNode<DaThuc> node_bitru = list_bitru.First;
+            xoalist(hieu);
+            LinkedList<int> so_mu_bitru = new LinkedList<int>();
+            so_mu_bitru = list_somu(list_bitru);
+            LinkedList<int> so_mu_tru = new LinkedList<int>();
+            so_mu_tru = list_somu(list_tru);
+            //temp_bitru = node_bitru.Value;
+            //LinkedListNode<DaThuc> node_tru = list_tru.First;
+            //temp_tru = node_tru.Value;
+            int i, j;
+            for (i = 0; i < list_bitru.Count; i++)
+            {
+                temp_bitru = node_bitru.Value;
+                LinkedListNode<DaThuc> node_tru = list_tru.First;
+
+                for (j = 0; j < list_tru.Count; j++)
+                {
+                    temp_tru = node_tru.Value;
+                    if (temp_bitru.somu == temp_tru.somu)
+                    {
+                        h.heso = temp_bitru.heso - temp_tru.heso;
+                        h.somu = temp_bitru.somu;
+                        if (h.heso != 0) hieu.AddLast(h);
+                        //break;
+                    }
+                    if (so_mu_bitru.Contains(temp_tru.somu) == false)
+                    {
+                        h.heso = 0 - temp_tru.heso;
+                        h.somu = temp_tru.somu;
+                        hieu.AddLast(h);
+                    }
+                    node_tru = node_tru.Next;
+                }
+                //if (i >= list_tru.Count) hieu.AddLast(temp_bitru);
+                if (so_mu_tru.Contains(temp_bitru.somu) == false)
+                {
+                    h.heso = temp_bitru.heso;
+                    h.somu = temp_bitru.somu;
+                    hieu.AddLast(h);
+                }
+                node_bitru = node_bitru.Next;
+            }
+
+            return hieu;
+        }
+
+        public DaThuc chiaso(DaThuc dathuc1, DaThuc dathuc2)
+        {
+            DaThuc dathuc_thuong;
+            dathuc_thuong.somu = dathuc1.somu - dathuc2.somu;
+            dathuc_thuong.heso = dathuc1.heso / dathuc2.heso;
+            return dathuc_thuong;
+        }
+
+        public void chia(LinkedList<DaThuc> list_bichia, LinkedList<DaThuc> list_chia)
+        {
+            //hieu = list_bichia;
+            copylist(temp_hieu, list_bichia);
+            //LinkedListNode<DaThuc> node_bichia = list_bichia.First;
+
+
+
+            LinkedListNode<DaThuc> node_chia = list_chia.First;
+            so_chia = node_chia.Value;
+            int i;
+            for (i = 0; i <= somu_max; i++)
+            {
+                if (temp_hieu.Count == 0) break;
+                LinkedListNode<DaThuc> node_bichia = temp_hieu.First;
+                bi_chia = node_bichia.Value;
+                if (bi_chia.somu < so_chia.somu) break;
+                if (bi_chia.somu >= so_chia.somu)
+                {
+                    so_thuong = chiaso(bi_chia, so_chia);
+                    thuong.AddLast(so_thuong);
+                    tich = nhan(so_thuong, list_chia);
+                    //temp_hieu = hieu;  //khong gan duoc linkedlist, cai moi se gan lai dia chi, k copy ra ban moi
+                    hieu = tru(temp_hieu, tich);
+                    xoalist(temp_hieu);
+                    copylist(temp_hieu, hieu);
+                }
+            }
+
+            Console.WriteLine("Thuong la: ");
+            hienthi(thuong);
+            Console.WriteLine();
+            if (hieu.Count > 0)
+            {
+                Console.WriteLine("Du la: ");
+                hienthi(hieu);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Program p = new Program();
+            int sohangtu1, sohangtu2;
+
+            p.a.heso = 3; p.a.somu = 5;
+            //p.b.heso = 5; p.b.somu = 3;
+            //p.c.heso = 1; p.c.somu = 2;
+            p.d.heso = 2; p.d.somu = 1;
+            //p.o.heso = -1; p.o.somu = 0;
+
+            p.e.heso = 1; p.e.somu = 2;
+            //p.f.heso = 1; p.f.somu = 1;
+            p.u.heso = 1; p.u.somu = 0;
+            LinkedList<DaThuc> A = new LinkedList<DaThuc>();
+            //Console.WriteLine("Nhap so hang tu da thuc thu nhat ");
+            //sohangtu1 = Convert.ToInt16(Console.ReadLine());
+            //p.nhap(A, sohangtu1);
+            /*A.AddLast(p.a);*/
+            A.AddLast(p.a); A.AddLast(p.d); //A.AddLast(p.d); A.AddLast(p.o);
+            LinkedListNode<DaThuc> nodemax = A.First;
+            p.somu_max = nodemax.Value.somu;
+
+            LinkedList<DaThuc> B = new LinkedList<DaThuc>();
+            /*B.AddLast(p.e);*/
+            B.AddLast(p.e); B.AddLast(p.u);
+            //Console.WriteLine("Nhap so hang tu da thuc thu hai ");
+            //sohangtu2 = Convert.ToInt16(Console.ReadLine());            
+            //p.nhap(B, sohangtu2);
+
+            p.hienthi(A);
+            Console.WriteLine();
+            p.hienthi(B);
+
+            Console.WriteLine();
+            //p.tru(A, B);
+            //p.hienthi(p.hieu);
+            p.chia(A, B);
+
+            Console.ReadKey();
+        }
+    }
+}
