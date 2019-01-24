@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Collections;
+
+namespace Infix_to_Postfix
+{
+    class Program
+    {
+        public string[] InputFile(string input)
+        {
+            string[] lines = File.ReadAllLines(input);
+            //int n = lines.Length;
+            //foreach (string s in lines)
+            //{
+            //    Console.WriteLine(s);
+            //}
+            return lines;
+            //Console.ReadLine();
+        }
+
+        public string postfix; 
+
+        public int GetPriority(string op)
+        {
+            if (op == "=") return 0;
+            if (op == "(") return 1;
+            if (op == "+" || op == "-") return 2;
+            if (op == "*" || op == "/" || op == "%") return 3;
+            return 4;
+        }
+
+        public void InfixtoPostfix(string infix)
+        {
+            string[] operand = { "=", "(", ")", "+", "-", "*", "/", "%" };            
+            Stack<string> S = new Stack<string>();
+
+            int i = 0, n=infix.Length;
+            string x = "", temp;
+            for(i=0; i<n; i++)
+            {
+                temp = ""+infix[i];
+                if(operand.Contains(temp)==false)
+                {
+                    postfix = postfix + temp;
+                }
+                else
+                if(operand.Contains(temp))
+                {
+                    if (temp == "(")
+                        S.Push(temp);
+                    else
+                    if (temp == ")")
+                        while ((x = S.Pop()) != "(")
+                            postfix = postfix + x;
+                    else
+                    {
+                        if(S.Count==0) S.Push(temp);
+                        else
+                        {
+                            while (GetPriority(temp) <= GetPriority(S.Peek()))
+                            {
+                                x = S.Pop();
+                                postfix = postfix + x;
+                                if (S.Count == 0) break;
+                            }
+                            S.Push(temp);
+                        }                        
+                    }
+                }
+            }
+
+            while(S.Count>0)
+            {
+                x = S.Pop();
+                postfix = postfix + " ";
+                postfix = postfix + x;
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            Program p = new Program();
+
+            string linkin = @"C:\Users\nnh\source\repos\Infix_to_Postfix_b2\input.txt";
+            string[] list= p.InputFile(linkin);
+
+            string linkout= @"C:\Users\nnh\source\repos\Infix_to_Postfix_b2\output.txt";
+            string[] listout=new string[10];
+
+            int h = 0;
+
+            foreach (string s in list)
+            {
+                p.postfix = "";
+                p.InfixtoPostfix(s);
+                while(p.postfix.Contains("  "))
+                {
+                    p.postfix = p.postfix.Replace("  ", " ");
+                }               
+                Console.WriteLine(p.postfix);
+                listout[h] = p.postfix;
+                h++;                
+            }
+
+            File.WriteAllLines(linkout, listout);
+            Console.ReadKey();
+        }
+    }
+}
