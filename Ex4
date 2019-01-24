@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace infix_fault_detected_b4
+{
+    class Program
+    {
+        public string[] InputFile(string input)
+        {
+            string[] lines = File.ReadAllLines(input);
+            return lines;
+         }
+
+        public void fault_detected(string fault)
+        {
+            string[] operand = { "=", "(", ")", "+", "-", "*", "/", "%", "!", ">", "<" };
+            int i = 0, n = fault.Length, key = -1, t = 0;
+            Stack<int> mo_ngoac = new Stack<int>();
+            int[] key_ = new int[n];
+            string x, temp;
+
+            //for(i=0;i<n-1;i++)
+            while (i < n) 
+            {
+                temp = "" + fault[i];
+
+                if (operand.Contains(temp))
+                {
+                    if (temp == "(")
+                    {
+                        mo_ngoac.Push(i);
+                        i++;
+                    }
+                    else
+                    if (temp == ")")
+                    {
+                        if (mo_ngoac.Count > 0)
+                        {
+                            mo_ngoac.Pop();
+                        }
+                        else { key = i; key_[t] = key; t++; }
+                        i++;
+                    }
+                    else
+                        while (i < n - 1)
+                        {
+                            x = "" + fault[i + 1];
+                            if (operand.Contains(x))
+                            {
+                                key = i;
+                                if (x == "(") key = -1;
+                                if ((temp == ">" || temp == "<") && x == "=") key = -1;
+                                if (key >= 0) { key_[t] = key; t++; }
+                            }
+                            i++;
+                            break;
+                        }
+                }
+                else i++;
+            }
+            
+            while (mo_ngoac.Count > 0)
+            {
+                key_[t] = mo_ngoac.Pop();
+                t++;
+            }
+            for (i = 0; i < t; i++)
+                Console.Write("{0} ", key_[i]);
+        }
+
+        static void Main(string[] args)
+        {
+            Program p = new Program();
+            string linkin = @"C:\Users\nnh\source\repos\infix_fault_detected_b4\input.txt";
+            string[] list = p.InputFile(linkin);
+
+            foreach(string s in list)
+            {
+                p.fault_detected(s);
+                Console.WriteLine();
+            }
+            Console.ReadKey();
+        }
+    }
+}
